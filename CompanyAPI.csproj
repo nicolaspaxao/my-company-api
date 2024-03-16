@@ -30,8 +30,8 @@
     <Folder Include="Models\" />
     <Folder Include="Dtos\" />
     <Folder Include="Mappings\" />
-    <Folder Include="Services\" />
-    <Folder Include="Repositories\" />
+    <Folder Include="Repositories\Repos\" />
+    <Folder Include="Repositories\UnitOfWorks\" />
   </ItemGroup>
 
 </Project>
