@@ -13,6 +13,14 @@ namespace CompanyAPI.Repositories.UnitOfWorks {
             _context = context;
         }
 
+        //Adicionar os repos
+
+        //public IExempleRepository ExempleRepository {
+        //    get {
+        //        return _exempleRepository = _exempleRepository ?? new ExempleRepository(_context);
+        //    }
+        //}
+
         public async Task Commit () {
             await _context!.SaveChangesAsync();
         }

@@ -56,15 +56,9 @@ builder.Services.AddSwaggerGen(c =>{
 //1. Recuperando a string de conexão
 string sqlServerConnection = builder.Configuration.GetConnectionString("DefaultConnection");
 //2. Configuração do serviço do EF no contexto para o container DI nativo 
-builder.Services.AddDbContext<AppDbContext>(options =>
-{
+builder.Services.AddDbContext<AppDbContext>(options =>{
     options.UseSqlServer(sqlServerConnection);
 });
-
-//Adiciona o Identity no projeto
-builder.Services.AddIdentity<IdentityUser , IdentityRole>()
-    .AddEntityFrameworkStores<AppDbContext>()
-    .AddDefaultTokenProviders();
 
 //Adição do CORS
 builder.Services.AddCors();
