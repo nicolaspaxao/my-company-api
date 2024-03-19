@@ -1,10 +1,11 @@
 ﻿
 using CompanyAPI.DbContext;
+using CompanyAPI.Repositories.Repos;
 
 namespace CompanyAPI.Repositories.UnitOfWorks {
     public class UnitOfWorks : IUnitOfWorks {
-        //Instancias dos repos
-        //private ExempleRepository _exempleRepository;
+
+        private EmployeeRepository _employeeRepo;
 
         public AppDbContext? _context;
 
@@ -13,13 +14,11 @@ namespace CompanyAPI.Repositories.UnitOfWorks {
             _context = context;
         }
 
-        //Adicionar os repos
-
-        //public IExempleRepository ExempleRepository {
-        //    get {
-        //        return _exempleRepository = _exempleRepository ?? new ExempleRepository(_context);
-        //    }
-        //}
+        public IEmployeeRepository employeeRepo {
+            get {
+                return _employeeRepo = _employeeRepo ?? new EmployeeRepository(_context);
+            }
+        }
 
         public async Task Commit () {
             await _context!.SaveChangesAsync();

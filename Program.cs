@@ -1,5 +1,6 @@
 using AutoMapper;
 using CompanyAPI.DbContext;
+using CompanyAPI.Logging;
 using CompanyAPI.Mappings;
 using CompanyAPI.Repositories.UnitOfWorks;
 using Microsoft.AspNetCore.Identity;
@@ -15,11 +16,13 @@ builder.WebHost.UseIISIntegration();
 
 builder.Services.AddCors();
 
+// Configuração para desserialização do JSON com mais de uma classe na consulta 
 builder.Services.AddControllers().AddJsonOptions(options =>{
     options.JsonSerializerOptions.IgnoreNullValues = true;
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
 
+//Configurações do Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>{
     c.SwaggerDoc("v1" , new OpenApiInfo { 
@@ -36,27 +39,32 @@ builder.Services.AddSwaggerGen(c =>{
 );
 
 //AutoMapper
-var mappingConfig = new MapperConfiguration(mc => {
-    mc.AddProfile(new MappingProfile());
-});
+var mappingConfig = new MapperConfiguration(mc => mc.AddProfile(new MappingProfile()));
 IMapper mapper = mappingConfig.CreateMapper();
 
+//Services
 builder.Services.AddScoped<IUnitOfWorks , UnitOfWorks>();
+builder.Services.AddSingleton(mapper);
 
+//Conexão com o SGBD
 builder.Services.AddDbContext<AppDbContext>(options =>{
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
 
-
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
+var loggerFactory = app.Services.GetRequiredService<ILoggerFactory>();
+loggerFactory.AddProvider(new CostumerLoggerProvider(new CostumerLoggerProviderConfiguration {
+    logLevel = LogLevel.Information
+}));
+
+if (app.Environment.IsDevelopment()){
     app.UseSwagger();
     app.UseSwaggerUI();
     app.UseSwaggerUI();
 }
+
 app.UseHttpsRedirection();
 
 app.UseCors(options => {

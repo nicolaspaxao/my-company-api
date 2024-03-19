@@ -1,7 +1,9 @@
-﻿namespace CompanyAPI.Repositories.UnitOfWorks {
+﻿using CompanyAPI.Repositories.Repos;
+
+namespace CompanyAPI.Repositories.UnitOfWorks {
     public interface IUnitOfWorks {
         //Adicionar as interfaces do Repositórios
-        // IExempleRepository ExempleRepository { get; }
+        IEmployeeRepository employeeRepo { get; }
 
         Task Commit ();
     }
