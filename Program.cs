@@ -1,4 +1,6 @@
+using AutoMapper;
 using CompanyAPI.DbContext;
+using CompanyAPI.Mappings;
 using CompanyAPI.Repositories.UnitOfWorks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +34,12 @@ builder.Services.AddSwaggerGen(c =>{
     c.IncludeXmlComments(xmlPath);
 }
 );
+
+//AutoMapper
+var mappingConfig = new MapperConfiguration(mc => {
+    mc.AddProfile(new MappingProfile());
+});
+IMapper mapper = mappingConfig.CreateMapper();
 
 builder.Services.AddScoped<IUnitOfWorks , UnitOfWorks>();
 
