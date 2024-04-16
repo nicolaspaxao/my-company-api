@@ -59,6 +59,8 @@ loggerFactory.AddProvider(new CostumerLoggerProvider(new CostumerLoggerProviderC
     logLevel = LogLevel.Information
 }));
 
+app.UseDeveloperExceptionPage();
+
 if (app.Environment.IsDevelopment()){
     app.UseSwagger();
     app.UseSwaggerUI();

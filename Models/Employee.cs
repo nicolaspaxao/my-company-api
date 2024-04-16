@@ -19,7 +19,7 @@ public class Employee : IValidatableObject{
     public string role { get; set; }
     public string gender { get; set; }  
     public DateTime createdAt { get; set; }
-    public DateTime bloquedAt { get; set; }
+    public DateTime? bloquedAt { get; set; }
 
     public IEnumerable<ValidationResult> Validate ( ValidationContext validationContext ) {
         if (fullName.IsNullOrEmpty()) {

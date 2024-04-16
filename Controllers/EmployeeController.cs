@@ -67,6 +67,7 @@ public class EmployeeController : ControllerBase {
                 return BadRequest(new HttpError(400 , "Houve algum erro ao receber os dados"));
             }
             employee.createdAt = DateTime.Now;
+            employee.bloquedAt = null;
             _uof.employeeRepo.Add(employee);
             await _uof.Commit();
             return Ok("Colaborador salvo com sucesso!");
